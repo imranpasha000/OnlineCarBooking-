@@ -1,0 +1,10 @@
+com\boxcars\matching\config\WebConfig.class
+com\boxcars\matching\config\RabbitConfig.class
+com\boxcars\matching\controller\MatchingController.class
+com\boxcars\matching\dto\NearbyDriverResponse$NearbyDriverResponseBuilder.class
+com\boxcars\matching\exception\GlobalExceptionHandler.class
+com\boxcars\matching\service\MatchingService.class
+com\boxcars\matching\dto\NearbyDriverResponse.class
+com\boxcars\matching\listener\MatchingEventListener.class
+com\boxcars\matching\MatchingServiceApplication.class
+com\boxcars\matching\dto\DriverLocationRequest.class

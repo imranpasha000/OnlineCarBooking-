@@ -1,0 +1,6 @@
+com\boxcars\common\dto\RegisterRequest.class
+com\boxcars\common\event\DomainEvent.class
+com\boxcars\common\dto\LoginRequest.class
+com\boxcars\common\error\ApiError.class
+com\boxcars\common\dto\AuthResponse.class
+com\boxcars\common\jwt\JwtUtil.class
