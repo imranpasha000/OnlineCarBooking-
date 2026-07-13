@@ -1,0 +1,12 @@
+com\boxcars\rating\dto\CreateRatingRequest.class
+com\boxcars\rating\exception\BadRequestException.class
+com\boxcars\rating\repository\RatingRepository.class
+com\boxcars\rating\controller\RatingController.class
+com\boxcars\rating\entity\Rating.class
+com\boxcars\rating\entity\Rating$RatingBuilder.class
+com\boxcars\rating\RatingServiceApplication.class
+com\boxcars\rating\entity\ReferenceType.class
+com\boxcars\rating\service\RatingService.class
+com\boxcars\rating\exception\ResourceNotFoundException.class
+com\boxcars\rating\config\WebConfig.class
+com\boxcars\rating\exception\GlobalExceptionHandler.class

@@ -1,0 +1,11 @@
+D:\OnlineCarBooking\backend\rating-service\src\main\java\com\boxcars\rating\config\WebConfig.java
+D:\OnlineCarBooking\backend\rating-service\src\main\java\com\boxcars\rating\controller\RatingController.java
+D:\OnlineCarBooking\backend\rating-service\src\main\java\com\boxcars\rating\dto\CreateRatingRequest.java
+D:\OnlineCarBooking\backend\rating-service\src\main\java\com\boxcars\rating\entity\Rating.java
+D:\OnlineCarBooking\backend\rating-service\src\main\java\com\boxcars\rating\entity\ReferenceType.java
+D:\OnlineCarBooking\backend\rating-service\src\main\java\com\boxcars\rating\exception\BadRequestException.java
+D:\OnlineCarBooking\backend\rating-service\src\main\java\com\boxcars\rating\exception\GlobalExceptionHandler.java
+D:\OnlineCarBooking\backend\rating-service\src\main\java\com\boxcars\rating\exception\ResourceNotFoundException.java
+D:\OnlineCarBooking\backend\rating-service\src\main\java\com\boxcars\rating\RatingServiceApplication.java
+D:\OnlineCarBooking\backend\rating-service\src\main\java\com\boxcars\rating\repository\RatingRepository.java
+D:\OnlineCarBooking\backend\rating-service\src\main\java\com\boxcars\rating\service\RatingService.java

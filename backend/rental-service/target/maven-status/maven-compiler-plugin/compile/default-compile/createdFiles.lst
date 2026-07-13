@@ -1,0 +1,16 @@
+com\boxcars\rental\RentalServiceApplication.class
+com\boxcars\rental\config\WebConfig.class
+com\boxcars\rental\dto\BookRentalRequest.class
+com\boxcars\rental\exception\GlobalExceptionHandler.class
+com\boxcars\rental\entity\RentalBooking$RentalBookingBuilder.class
+com\boxcars\rental\exception\BadRequestException.class
+com\boxcars\rental\controller\RentalController.class
+com\boxcars\rental\service\RentalService.class
+com\boxcars\rental\exception\ForbiddenException.class
+com\boxcars\rental\dto\RentalSearchResponse.class
+com\boxcars\rental\entity\RentalBooking.class
+com\boxcars\rental\repository\RentalBookingRepository.class
+com\boxcars\rental\entity\RentalStatus.class
+com\boxcars\rental\exception\ResourceNotFoundException.class
+com\boxcars\rental\config\RabbitMQConfig.class
+com\boxcars\rental\service\RentalEventPublisher.class

@@ -1,0 +1,14 @@
+com\boxcars\auth\entity\User.class
+com\boxcars\auth\AuthServiceApplication.class
+com\boxcars\auth\exception\ApiException.class
+com\boxcars\auth\controller\AuthController.class
+com\boxcars\auth\entity\AuthProvider.class
+com\boxcars\auth\dto\UserInfoResponse.class
+com\boxcars\auth\repository\UserRepository.class
+com\boxcars\auth\service\AuthService.class
+com\boxcars\auth\config\DataInitializer.class
+com\boxcars\auth\exception\GlobalExceptionHandler.class
+com\boxcars\auth\repository\RoleRepository.class
+com\boxcars\auth\config\SecurityConfig.class
+com\boxcars\auth\dto\RefreshTokenRequest.class
+com\boxcars\auth\entity\Role.class

@@ -1,293 +1,192 @@
 "use client";
+
 import React, { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Search, UserRoundCheck } from "lucide-react";
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
 } from "../ui/navigation-menu";
+import { useAuth } from "@/context/AuthContext";
+import { cn } from "@/lib/utils";
+
+const productLinks = [
+  { href: "/ride", label: "Ride" },
+  { href: "/drive", label: "Drive" },
+  { href: "/rent", label: "Rent" },
+  { href: "/owner", label: "Fleet" },
+  { href: "/admin", label: "Admin" },
+];
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+  const { user, isAuthenticated, logout, loading } = useAuth();
+  const pathname = usePathname();
+  const dark = ["/ride", "/drive", "/rent", "/owner", "/admin"].some(
+    (p) => pathname === p || pathname.startsWith(`${p}/`)
+  );
 
   return (
-    <header className="sticky top-0 z-50 bg-white shadow-sm">
+    <header
+      className={cn(
+        "sticky top-0 z-50 border-b backdrop-blur",
+        dark
+          ? "border-white/10 bg-ink/90 text-white"
+          : "border-slate-200 bg-white/95 text-slate-900 shadow-sm"
+      )}
+    >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between py-3">
-          {/* Left side - Logo and Search */}
-          <div className="flex items-center space-x-4">
-            <h1 className="text-3xl font-bold">
-              <Link href="/">
-                <div className="relative inline-block cursor-pointer">
-                  <span className="text-transparent [-webkit-text-stroke:1px_#05a8f3]">
-                    BOX
-                  </span>
-                  <span className="absolute top-0 left-0 text-blue-500 [-webkit-text-stroke:1px_#05a8f3] animate-waves">
-                    BOX
-                  </span>
-                  <span className="text-gray-900">CARS</span>
-                </div>
-              </Link>
-            </h1>
-            <div className="hidden lg:flex items-center relative">
-              <Search className="absolute left-3 h-4 w-4 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Search Cars eg. Audi Q7"
-                className="pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-[10px] focus:outline-none focus:ring-.5 focus:ring-blue-500 focus:border-blue-500 w-64"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
-          </div>
+          <Link href="/" className="font-display text-2xl font-bold tracking-tight">
+            <span className={dark ? "text-volt" : "text-[#05a8f3]"}>BOX</span>
+            <span className={dark ? "text-white" : "text-slate-900"}>CARS</span>
+          </Link>
 
-          {/* Middle - Navigation */}
-          <div className="hidden md:flex items-center">
+          <div className="hidden items-center md:flex">
             <NavigationMenu>
               <NavigationMenuList className="gap-1">
                 <NavigationMenuItem>
                   <NavigationMenuLink asChild>
                     <Link
                       href="/"
-                      className="px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100"
+                      className={cn(
+                        "rounded-full px-3 py-2 text-sm font-medium",
+                        dark ? "hover:bg-white/10" : "hover:bg-gray-100"
+                      )}
                     >
                       Home
                     </Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
-
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger className="text-sm font-medium px-3 py-2 hover:bg-gray-100">
-                    Inventory
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent className="p-2 min-w-[200px]">
-                    <div className="grid gap-1">
-                      <NavigationMenuLink asChild>
-                        <Link
-                          href="/inventory/new"
-                          className="px-3 py-2 text-sm rounded-md hover:bg-gray-100"
-                        >
-                          New Arrivals
-                        </Link>
-                      </NavigationMenuLink>
-
-                      <NavigationMenuLink asChild>
-                        <Link
-                          href="/inventory/used"
-                          className="px-3 py-2 text-sm rounded-md hover:bg-gray-100"
-                        >
-                          Used Vehicles
-                        </Link>
-                      </NavigationMenuLink>
-
-                      <NavigationMenuLink asChild>
-                        <Link
-                          href="/inventory/featured"
-                          className="px-3 py-2 text-sm rounded-md hover:bg-gray-100"
-                        >
-                          Featured Listings
-                        </Link>
-                      </NavigationMenuLink>
-                    </div>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-
-                <NavigationMenuItem>
-                  <NavigationMenuLink asChild>
-                    <Link
-                      href="/blog"
-                      className="px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100"
-                    >
-                      Blog
-                    </Link>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-
-                <NavigationMenuItem>
-                  <NavigationMenuLink asChild>
-                    <Link
-                      href="/shop"
-                      className="px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100"
-                    >
-                      Shop
-                    </Link>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger className="text-sm font-medium px-3 py-2 hover:bg-gray-100">
-                    Pages
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent className="p-2 min-w-[200px]">
-                    <div className="grid gap-1">
-                      <NavigationMenuLink asChild>
-                        <Link
-                          href="/about"
-                          className="px-3 py-2 text-sm rounded-md hover:bg-gray-100"
-                        >
-                          About Us
-                        </Link>
-                      </NavigationMenuLink>
-
-                      <NavigationMenuLink asChild>
-                        <Link
-                          href="/testimonials"
-                          className="px-3 py-2 text-sm rounded-md hover:bg-gray-100"
-                        >
-                          Testimonials
-                        </Link>
-                      </NavigationMenuLink>
-
-                      <NavigationMenuLink asChild>
-                        <Link
-                          href="/faq"
-                          className="px-3 py-2 text-sm rounded-md hover:bg-gray-100"
-                        >
-                          FAQ
-                        </Link>
-                      </NavigationMenuLink>
-                    </div>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-
-                <NavigationMenuItem>
-                  <NavigationMenuLink asChild>
-                    <Link
-                      href="/contact"
-                      className="px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100"
-                    >
-                      Contact
-                    </Link>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
+                {productLinks.map((link) => (
+                  <NavigationMenuItem key={link.href}>
+                    <NavigationMenuLink asChild>
+                      <Link
+                        href={link.href}
+                        className={cn(
+                          "rounded-full px-3 py-2 text-sm font-medium",
+                          pathname.startsWith(link.href)
+                            ? dark
+                              ? "bg-volt text-ink"
+                              : "bg-[#05a8f3] text-white"
+                            : dark
+                              ? "hover:bg-white/10"
+                              : "hover:bg-gray-100"
+                        )}
+                      >
+                        {link.label}
+                      </Link>
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                ))}
               </NavigationMenuList>
             </NavigationMenu>
           </div>
 
-          {/* Right side - Phone, Buttons */}
-          <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="sm">
-              <Link href="/sign-in" prefetch={false}>
-                <UserRoundCheck />
-              </Link>
-            </Button>
+          <div className="flex items-center gap-3">
+            {!loading &&
+              (isAuthenticated ? (
+                <div className="hidden items-center gap-3 sm:flex">
+                  <span
+                    className={cn(
+                      "max-w-[160px] truncate text-sm",
+                      dark ? "text-slate-300" : "text-slate-600"
+                    )}
+                  >
+                    {user?.email}
+                  </span>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className={cn(
+                      "rounded-full",
+                      dark
+                        ? "border-volt/40 bg-transparent text-volt hover:bg-volt hover:text-ink"
+                        : "border-[#05a8f3] text-[#05a8f3]"
+                    )}
+                    onClick={logout}
+                  >
+                    Logout
+                  </Button>
+                </div>
+              ) : (
+                <Button
+                  asChild
+                  size="sm"
+                  className={cn(
+                    "hidden rounded-full sm:inline-flex",
+                    dark
+                      ? "bg-volt text-ink hover:bg-volt-soft"
+                      : "bg-[#05a8f3] text-white hover:bg-[#0490d1]"
+                  )}
+                >
+                  <Link href="/sign-in">Sign In</Link>
+                </Button>
+              ))}
 
-            <Button
-              variant="outline"
-              size="sm"
-              className="hidden lg:flex px-3  py-2 border rounded-[15px] hover:bg-blue-900 hover:text-white"
-            >
-              Add New Car
-            </Button>
-            {/* Mobile menu button */}
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden"
-              onClick={toggleMenu}
+              className={cn("md:hidden", dark && "text-white hover:bg-white/10")}
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label="Toggle menu"
             >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth="2"
                   d="M4 6h16M4 12h16M4 18h16"
-                ></path>
+                />
               </svg>
             </Button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 bg-white shadow-lg md:hidden z-50 border-t border-gray-200">
-          <div className="container mx-auto px-4 py-3">
-            <div className="flex items-center mb-4 relative">
-              <Search className="absolute left-3 h-4 w-4 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Search Cars eg. Audi Q7"
-                className="pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-[10px] focus:outline-none focus:ring-0.5 focus:ring-blue-500 focus:border-blue-500 w-full"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
-            <nav className="flex flex-col space-y-3">
+        <div
+          className={cn(
+            "absolute left-0 right-0 top-full z-50 border-t md:hidden",
+            dark
+              ? "border-white/10 bg-ink text-white"
+              : "border-gray-200 bg-white text-slate-800"
+          )}
+        >
+          <nav className="container mx-auto flex flex-col gap-1 px-4 py-3">
+            <Link href="/" onClick={() => setIsOpen(false)} className="py-2">
+              Home
+            </Link>
+            {productLinks.map((link) => (
               <Link
-                href="/"
-                className="py-2 text-gray-700 hover:text-blue-600"
-                prefetch={false}
+                key={link.href}
+                href={link.href}
+                className="py-2"
+                onClick={() => setIsOpen(false)}
               >
-                Home
+                {link.label}
               </Link>
-              <Link
-                href="/inventory"
-                className="py-2 text-gray-700 hover:text-blue-600"
-                prefetch={false}
+            ))}
+            {isAuthenticated ? (
+              <Button
+                variant="outline"
+                className="mt-2"
+                onClick={() => {
+                  logout();
+                  setIsOpen(false);
+                }}
               >
-                Inventory
+                Logout
+              </Button>
+            ) : (
+              <Link href="/sign-in" onClick={() => setIsOpen(false)}>
+                <Button className="mt-2 w-full">Sign In</Button>
               </Link>
-              <Link
-                href="/blog"
-                className="py-2 text-gray-700 hover:text-blue-600"
-                prefetch={false}
-              >
-                Blog
-              </Link>
-              <Link
-                href="/shop"
-                className="py-2 text-gray-700 hover:text-blue-600"
-                prefetch={false}
-              >
-                Shop
-              </Link>
-              <Link
-                href="/pages"
-                className="py-2 text-gray-700 hover:text-blue-600"
-                prefetch={false}
-              >
-                Pages
-              </Link>
-              <Link
-                href="/contact"
-                className="py-2 text-gray-700 hover:text-blue-600"
-                prefetch={false}
-              >
-                Contact
-              </Link>
-              <div className="pt-2 space-y-2">
-                <Link href="/sign-in" className="w-full" prefetch={false}>
-                  <Button variant="ghost" className="w-full">
-                    <UserRoundCheck />
-                  </Button>
-                </Link>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full hover:bg-blue-900 hover:text-white"
-                >
-                  Add New Car
-                </Button>
-              </div>
-            </nav>
-          </div>
+            )}
+          </nav>
         </div>
       )}
     </header>

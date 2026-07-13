@@ -1,0 +1,15 @@
+com\boxcars\user\config\WebConfig.class
+com\boxcars\user\exception\ResourceNotFoundException.class
+com\boxcars\user\entity\UserProfile$UserProfileBuilder.class
+com\boxcars\user\dto\UpdateProfileRequest.class
+com\boxcars\user\entity\SellerType.class
+com\boxcars\user\controller\UserController.class
+com\boxcars\user\dto\SyncUserRequest.class
+com\boxcars\user\repository\UserProfileRepository.class
+com\boxcars\user\UserServiceApplication.class
+com\boxcars\user\entity\UserProfile.class
+com\boxcars\user\dto\DriverOnlineRequest.class
+com\boxcars\user\exception\GlobalExceptionHandler.class
+com\boxcars\user\service\UserProfileService.class
+com\boxcars\user\exception\ForbiddenException.class
+com\boxcars\user\dto\KycUpdateRequest.class

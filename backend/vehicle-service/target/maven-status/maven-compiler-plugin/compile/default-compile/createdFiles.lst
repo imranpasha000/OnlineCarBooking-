@@ -1,0 +1,16 @@
+com\boxcars\vehicle\config\WebConfig.class
+com\boxcars\vehicle\config\DataSeeder.class
+com\boxcars\vehicle\dto\UpdateVehicleRequest.class
+com\boxcars\vehicle\exception\ResourceNotFoundException.class
+com\boxcars\vehicle\controller\VehicleController.class
+com\boxcars\vehicle\VehicleServiceApplication.class
+com\boxcars\vehicle\entity\Vehicle.class
+com\boxcars\vehicle\exception\ForbiddenException.class
+com\boxcars\vehicle\exception\GlobalExceptionHandler.class
+com\boxcars\vehicle\dto\UpdateStatusRequest.class
+com\boxcars\vehicle\service\VehicleService.class
+com\boxcars\vehicle\entity\VehicleStatus.class
+com\boxcars\vehicle\dto\CreateVehicleRequest.class
+com\boxcars\vehicle\entity\VehicleType.class
+com\boxcars\vehicle\repository\VehicleRepository.class
+com\boxcars\vehicle\entity\Vehicle$VehicleBuilder.class
