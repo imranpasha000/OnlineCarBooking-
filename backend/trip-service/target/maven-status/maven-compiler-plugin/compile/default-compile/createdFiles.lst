@@ -1,0 +1,17 @@
+com\boxcars\trip\exception\ResourceNotFoundException.class
+com\boxcars\trip\controller\TripController.class
+com\boxcars\trip\exception\GlobalExceptionHandler.class
+com\boxcars\trip\dto\LocationUpdateRequest.class
+com\boxcars\trip\service\TripEventPublisher.class
+com\boxcars\trip\config\WebConfig.class
+com\boxcars\trip\repository\TripRepository.class
+com\boxcars\trip\entity\Trip$TripBuilder.class
+com\boxcars\trip\exception\ForbiddenException.class
+com\boxcars\trip\entity\Trip.class
+com\boxcars\trip\dto\CreateTripRequest.class
+com\boxcars\trip\config\WebSocketConfig.class
+com\boxcars\trip\entity\TripStatus.class
+com\boxcars\trip\exception\BadRequestException.class
+com\boxcars\trip\service\TripService.class
+com\boxcars\trip\TripServiceApplication.class
+com\boxcars\trip\config\RabbitMQConfig.class

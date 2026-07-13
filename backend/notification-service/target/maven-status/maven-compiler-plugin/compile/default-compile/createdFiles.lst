@@ -1,0 +1,9 @@
+com\boxcars\notification\model\NotificationRecord.class
+com\boxcars\notification\config\WebConfig.class
+com\boxcars\notification\config\RabbitConfig.class
+com\boxcars\notification\service\NotificationService$NotificationDraft.class
+com\boxcars\notification\service\NotificationService.class
+com\boxcars\notification\controller\NotificationController.class
+com\boxcars\notification\listener\NotificationEventListener.class
+com\boxcars\notification\NotificationServiceApplication.class
+com\boxcars\notification\model\NotificationRecord$NotificationRecordBuilder.class

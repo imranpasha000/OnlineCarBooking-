@@ -1,174 +1,247 @@
-import { useState } from 'react';
-import { Button } from '../ui/button';
-import { Label } from '../ui/label';
-import { Input } from '../ui/input';
-import { Checkbox } from '../ui/checkbox';
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "../ui/button";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
+import { Checkbox } from "../ui/checkbox";
+import { useAuth } from "@/context/AuthContext";
 
 export default function LoginSignupForm() {
-  const [activeTab, setActiveTab] = useState<'login' | 'signup'>('login');
-  const [isBusinessSeller, setIsBusinessSeller] = useState(false);
+  const router = useRouter();
+  const { login, register } = useAuth();
+
+  const [activeTab, setActiveTab] = useState<"login" | "signup">("login");
+  const [error, setError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [roleRider, setRoleRider] = useState(true);
+  const [roleDriver, setRoleDriver] = useState(false);
+  const [roleOwner, setRoleOwner] = useState(false);
   const [acceptPolicy, setAcceptPolicy] = useState(false);
 
+  async function handleLogin(e: React.FormEvent) {
+    e.preventDefault();
+    setError(null);
+    setSubmitting(true);
+    try {
+      await login(loginEmail.trim(), loginPassword);
+      router.push("/ride");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Login failed");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  async function handleRegister(e: React.FormEvent) {
+    e.preventDefault();
+    setError(null);
+
+    if (!acceptPolicy) {
+      setError("Please accept the privacy policy");
+      return;
+    }
+
+    const roles: string[] = [];
+    if (roleRider) roles.push("ROLE_RIDER");
+    if (roleDriver) roles.push("ROLE_DRIVER");
+    if (roleOwner) roles.push("ROLE_OWNER");
+    if (roles.length === 0) roles.push("ROLE_RIDER");
+
+    setSubmitting(true);
+    try {
+      await register({
+        username: username.trim(),
+        email: email.trim(),
+        phone: phone.trim(),
+        password,
+        roles,
+      });
+      router.push("/ride");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Registration failed");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
   return (
-    <div className="bg-white rounded-lg shadow-md p-8 w-full max-w-md">
-      {/* Tabs */}
-      <div className="flex mb-6 gap-1">
+    <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
+      <div className="mb-6 flex gap-1">
         <Button
           type="button"
-          className={`flex-1 py-3 font-medium text-center rounded-t-md transition-colors ${
-            activeTab === 'login'
-              ? 'bg-blue-600 text-white'
-              : 'bg-white text-blue-600 border-b-2 border-blue-600'
+          className={`flex-1 rounded-t-md py-3 text-center font-medium transition-colors ${
+            activeTab === "login"
+              ? "bg-[#05a8f3] text-white hover:bg-[#0490d1]"
+              : "border-b-2 border-[#05a8f3] bg-white text-[#05a8f3] hover:bg-sky-50"
           }`}
-          onClick={() => setActiveTab('login')}
+          onClick={() => {
+            setActiveTab("login");
+            setError(null);
+          }}
         >
           Sign in
         </Button>
         <Button
           type="button"
-          className={`flex-1 py-3 font-medium text-center rounded-t-md transition-colors ${
-            activeTab === 'signup'
-              ? 'bg-blue-600 text-white'
-              : 'bg-white text-blue-600 border-b-2 border-blue-600'
+          className={`flex-1 rounded-t-md py-3 text-center font-medium transition-colors ${
+            activeTab === "signup"
+              ? "bg-[#05a8f3] text-white hover:bg-[#0490d1]"
+              : "border-b-2 border-[#05a8f3] bg-white text-[#05a8f3] hover:bg-sky-50"
           }`}
-          onClick={() => setActiveTab('signup')}
+          onClick={() => {
+            setActiveTab("signup");
+            setError(null);
+          }}
         >
           Register
         </Button>
       </div>
 
-      {activeTab === 'login' ? (
-        <form className="space-y-4">
+      {error && (
+        <div className="mb-4 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+          {error}
+        </div>
+      )}
+
+      {activeTab === "login" ? (
+        <form className="space-y-4" onSubmit={handleLogin}>
           <div>
-            <Label className="block text-sm font-medium text-gray-700 mb-1">Email or Username</Label>
+            <Label className="mb-1 block text-sm font-medium text-gray-700">
+              Email
+            </Label>
             <Input
-              type="text"
-              placeholder="Creativelayer088"
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-900"
+              type="email"
+              required
+              value={loginEmail}
+              onChange={(e) => setLoginEmail(e.target.value)}
+              placeholder="you@example.com"
+              className="w-full"
             />
           </div>
 
           <div>
-            <Label className="block text-sm font-medium text-gray-700 mb-1">Password</Label>
+            <Label className="mb-1 block text-sm font-medium text-gray-700">
+              Password
+            </Label>
             <Input
               type="password"
+              required
+              value={loginPassword}
+              onChange={(e) => setLoginPassword(e.target.value)}
               placeholder="••••••••"
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-900"
+              className="w-full"
             />
-          </div>
-
-          <div className="flex justify-between items-center">
-            <div className="flex items-center">
-              <Checkbox
-                id="remember"
-                className="h-4 w-4 text-blue-600 focus:ring-blue-900 border-gray-300 rounded"
-              />
-              <Label htmlFor="remember" className="ml-2 block text-sm text-gray-700">
-                Remember
-              </Label>
-            </div>
-            <a href="#" className="text-sm text-blue-600 hover:underline">
-              Forgotten password?
-            </a>
           </div>
 
           <Button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors"
+            disabled={submitting}
+            className="w-full bg-[#05a8f3] text-white hover:bg-[#0490d1]"
           >
-            Login
+            {submitting ? "Signing in…" : "Login"}
           </Button>
-
-          <div className="relative my-6">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300"></div>
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">OR</span>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            <Button
-              size="sm"
-                variant="outline"
-              className="flex items-center justify-center gap-2 bg-blue-800 text-white py-2 rounded-md hover:bg-blue-900 transition-colors"
-            >
-              <span>Facebook</span>
-            </Button>
-            <Button
-              variant="outline"
-              type="button"
-              className="flex items-center justify-center gap-2 bg-red-600 text-white py-2 rounded-md hover:bg-red-700 transition-colors"
-            >
-              <span> +Google</span>
-            </Button>
-          </div>
         </form>
       ) : (
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleRegister}>
           <div>
-            <Label className="block text-sm font-medium text-gray-700 mb-1">Username</Label>
+            <Label className="mb-1 block text-sm font-medium text-gray-700">
+              Username
+            </Label>
             <Input
               type="text"
+              required
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               placeholder="User@123"
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-900"
+              className="w-full"
             />
           </div>
 
           <div>
-            <Label className="block text-sm font-medium text-gray-700 mb-1">Email</Label>
+            <Label className="mb-1 block text-sm font-medium text-gray-700">
+              Email
+            </Label>
             <Input
               type="email"
-              placeholder="User@gmail.com"
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-900"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@example.com"
+              className="w-full"
             />
           </div>
 
           <div>
-            <Label className="block text-sm font-medium text-gray-700 mb-1">Phone</Label>
+            <Label className="mb-1 block text-sm font-medium text-gray-700">
+              Phone
+            </Label>
             <Input
               type="tel"
+              required
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
               placeholder="+91-9999999999"
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-900"
+              className="w-full"
             />
           </div>
 
           <div>
-            <Label className="block text-sm font-medium text-gray-700 mb-1">Password</Label>
+            <Label className="mb-1 block text-sm font-medium text-gray-700">
+              Password
+            </Label>
             <Input
               type="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-900"
+              className="w-full"
             />
           </div>
 
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center">
-              <Input
-                type="radio"
-                id="privateSeller"
-                name="sellerType"
-                checked={!isBusinessSeller}
-                onChange={() => setIsBusinessSeller(false)}
-                className="h-4 w-4 text-blue-600 focus:ring-blue-900 border-gray-300"
-              />
-              <Label htmlFor="privateSeller" className="ml-2 block text-sm text-gray-700">
-                Private seller
-              </Label>
-            </div>
-            <div className="flex items-center">
-              <Input
-                type="radio"
-                id="businessSeller"
-                name="sellerType"
-                checked={isBusinessSeller}
-                onChange={() => setIsBusinessSeller(true)}
-                className="h-4 w-4 text-blue-600 focus:ring-blue-900 border-gray-300"
-              />
-              <Label htmlFor="businessSeller" className="ml-2 block text-sm text-gray-700">
-                Business seller
-              </Label>
+          <div>
+            <p className="mb-2 text-sm font-medium text-gray-700">Roles</p>
+            <div className="flex flex-wrap gap-4">
+              <div className="flex items-center gap-2">
+                <Checkbox
+                  id="roleRider"
+                  checked={roleRider}
+                  onCheckedChange={(c) => setRoleRider(c === true)}
+                />
+                <Label htmlFor="roleRider" className="text-sm text-gray-700">
+                  Rider
+                </Label>
+              </div>
+              <div className="flex items-center gap-2">
+                <Checkbox
+                  id="roleDriver"
+                  checked={roleDriver}
+                  onCheckedChange={(c) => setRoleDriver(c === true)}
+                />
+                <Label htmlFor="roleDriver" className="text-sm text-gray-700">
+                  Driver
+                </Label>
+              </div>
+              <div className="flex items-center gap-2">
+                <Checkbox
+                  id="roleOwner"
+                  checked={roleOwner}
+                  onCheckedChange={(c) => setRoleOwner(c === true)}
+                />
+                <Label htmlFor="roleOwner" className="text-sm text-gray-700">
+                  Owner
+                </Label>
+              </div>
             </div>
           </div>
 
@@ -176,46 +249,20 @@ export default function LoginSignupForm() {
             <Checkbox
               checked={acceptPolicy}
               onCheckedChange={(checked) => setAcceptPolicy(checked === true)}
-              className="h-4 w-4 text-blue-600 focus:ring-blue-900 border-gray-300 rounded"
               id="acceptPolicy"
             />
-            <Label htmlFor="acceptPolicy" className="ml-2 block text-sm text-gray-700">
+            <Label htmlFor="acceptPolicy" className="ml-2 text-sm text-gray-700">
               I accept the privacy policy
             </Label>
           </div>
 
           <Button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors"
+            disabled={submitting}
+            className="w-full bg-[#05a8f3] text-white hover:bg-[#0490d1]"
           >
-            Login
+            {submitting ? "Creating account…" : "Register"}
           </Button>
-
-          <div className="relative my-6">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300"></div>
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">______ OR ______</span>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            <Button
-              variant="outline"
-              type="button"
-              className="flex items-center justify-center gap-2 bg-blue-800 text-white py-2 rounded-md hover:bg-blue-900 transition-colors"
-            >
-              <span>Facebook</span>
-            </Button>
-            <Button
-              variant="outline"
-              type="button"
-              className="flex items-center justify-center gap-2 bg-red-600 text-white py-2 rounded-md hover:bg-red-700 transition-colors"
-            >
-              <span>+Google</span>
-            </Button>
-          </div>
         </form>
       )}
     </div>

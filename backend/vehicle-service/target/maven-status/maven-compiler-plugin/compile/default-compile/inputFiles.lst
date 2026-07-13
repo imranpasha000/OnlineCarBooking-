@@ -1,0 +1,15 @@
+D:\OnlineCarBooking\backend\vehicle-service\src\main\java\com\boxcars\vehicle\config\DataSeeder.java
+D:\OnlineCarBooking\backend\vehicle-service\src\main\java\com\boxcars\vehicle\config\WebConfig.java
+D:\OnlineCarBooking\backend\vehicle-service\src\main\java\com\boxcars\vehicle\controller\VehicleController.java
+D:\OnlineCarBooking\backend\vehicle-service\src\main\java\com\boxcars\vehicle\dto\CreateVehicleRequest.java
+D:\OnlineCarBooking\backend\vehicle-service\src\main\java\com\boxcars\vehicle\dto\UpdateStatusRequest.java
+D:\OnlineCarBooking\backend\vehicle-service\src\main\java\com\boxcars\vehicle\dto\UpdateVehicleRequest.java
+D:\OnlineCarBooking\backend\vehicle-service\src\main\java\com\boxcars\vehicle\entity\Vehicle.java
+D:\OnlineCarBooking\backend\vehicle-service\src\main\java\com\boxcars\vehicle\entity\VehicleStatus.java
+D:\OnlineCarBooking\backend\vehicle-service\src\main\java\com\boxcars\vehicle\entity\VehicleType.java
+D:\OnlineCarBooking\backend\vehicle-service\src\main\java\com\boxcars\vehicle\exception\ForbiddenException.java
+D:\OnlineCarBooking\backend\vehicle-service\src\main\java\com\boxcars\vehicle\exception\GlobalExceptionHandler.java
+D:\OnlineCarBooking\backend\vehicle-service\src\main\java\com\boxcars\vehicle\exception\ResourceNotFoundException.java
+D:\OnlineCarBooking\backend\vehicle-service\src\main\java\com\boxcars\vehicle\repository\VehicleRepository.java
+D:\OnlineCarBooking\backend\vehicle-service\src\main\java\com\boxcars\vehicle\service\VehicleService.java
+D:\OnlineCarBooking\backend\vehicle-service\src\main\java\com\boxcars\vehicle\VehicleServiceApplication.java

@@ -44,12 +44,32 @@ const Hero = () => {
 
   return (
     <section className="flex flex-col items-center py-20 bg-blue-50 px-4 md:px-10 lg:px-20">
-      <h2 className="text-3xl md:text-4xl font-bold text-center">
-        Find Your Dream Car
+      <h2 className="text-center font-display text-3xl font-bold md:text-5xl">
+        BoxCars Mobility
       </h2>
-      <p className="mt-2 text-base md:text-lg text-muted-foreground text-center">
-        Find cars for sale and rent near you
+      <p className="mt-2 text-center text-base text-muted-foreground md:text-lg">
+        Request a ride or rent a car — one platform, both sides of every trip
       </p>
+      <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+        <a
+          href="/ride"
+          className="rounded-full bg-[#0B1220] px-6 py-3 text-sm font-semibold text-white hover:bg-[#121A2B]"
+        >
+          Book a ride
+        </a>
+        <a
+          href="/rent"
+          className="rounded-full border border-[#0B1220] bg-white px-6 py-3 text-sm font-semibold text-[#0B1220] hover:bg-slate-50"
+        >
+          Rent a car
+        </a>
+        <a
+          href="/drive"
+          className="rounded-full bg-[#00C2FF] px-6 py-3 text-sm font-semibold text-[#0B1220] hover:bg-[#5AD7FF]"
+        >
+          Drive & earn
+        </a>
+      </div>
 
       {/* Filters */}
       <div className="flex items-center mt-6 pl-4 bg-white rounded-full border">
